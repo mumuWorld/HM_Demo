@@ -1,41 +1,32 @@
-import { JSON } from "@kit.ArkTS";
 import { fileUri } from '@kit.CoreFileKit';
-import { common } from '@kit.AbilityKit';
 import { resourceManager } from "@kit.LocalizationKit";
+import { router } from "@kit.ArkUI";
+import { DictResponse, SimpleWord } from "../model/DictModel";
+import { PhoneButton } from '../Views/PhoneButton';
+import { sim } from '@kit.TelephonyKit';
 
-@Builder
-export function ResultPageBuilder(name: string, param: ResultPageParam) {
-  ResultPage({param: param})
-}
-
-export class ResultPageParam {
-  word: string = "test"
-  source: string = ""
-
-  constructor() {
-  }
-}
 
 @Entry
 @Component
 export struct ResultPage {
 
-  @State param: ResultPageParam = new ResultPageParam();
-
-  constructor(param: ResultPageParam) {
-    super();
-    this.param = param
-  }
+  @State dict: DictResponse = new DictResponse()
+  @State sw: SimpleWord = new SimpleWord()
 
   getWordData() {
     // str = this.context.get
     // JSON.has()
-    let ctx = getContext(this) as common.UIAbilityContext;
-    let resourceManager = ctx.resourceManager
-
+    // let ctx = getContext(this) as common.UIAbilityContext;
+    // let resourceManager = ctx.resourceManager
+    let jStr = "{\"simple\":{\"query\":\"good\",\"word\":[{\"usphone\":\"ɡʊd\",\"ukphone\":\"ɡʊd\",\"ukspeech\":\"good&type=1\",\"return-phrase\":\"good\",\"usspeech\":\"good&type=2\",\"collegeExamVoice\":{\"speechWord\":\"good\"}}]}}"
+    this.dict = JSON.parse(jStr)
+    console.log("test->1111",this.dict?.simple?.query)
   }
 
   aboutToAppear(): void {
+    let p = router.getParams()
+    console.log("test-> appear 收到参数2" + p.toString())
+    this.getWordData()
 
   }
 
@@ -44,29 +35,35 @@ export struct ResultPage {
   baseSpacing: number = 16
 
   build() {
-    NavDestination() {
+    Stack() {
+
       Column() {
-        Text(this.param.word)
+        Text(this.dict.simple?.query)
           .fontSize(22)
           .fontWeight(FontWeight.Bold)
         Blank()
           .color(Color.Black)
           .height(1)
-
-
       }.width('100%').height('100%')
-      .padding({left: this.baseSpacing, right: this.baseSpacing})
+      .padding({left: this.baseSpacing, right: this.baseSpacing, top: 56 + 24})
       .alignItems(HorizontalAlign.Start)
 
-    }.title("返回标题test")
-    .onBackPressed(() => {
-      const popDestinationInfo = this.pathStack.pop() // 弹出路由栈栈顶元素
-      console.log('test->pop' + '返回值' + JSON.stringify(popDestinationInfo))
-      return true
-    })
+
+      this.dict.simple?.word?.forEach((word) => {
+        Row(){ PhoneButton(word)}
+      })
+      // Row(){
+      //   PhoneButton(this.dict.simple?.word?[0])
+      // }
+      // .alignItems(VerticalAlign.Top)
+
+    }
+    .alignContent(Alignment.TopStart)
+      .backgroundColor(Color.Green)
+
   }
 
   onPageShow(): void {
-    console.log('test->' + this.param.word + '测试参数')
+    console.log('test->' + this.dict.simple?.query + '测试参数')
   }
 }

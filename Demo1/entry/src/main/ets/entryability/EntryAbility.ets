@@ -19,10 +19,15 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
+    // 忽略安全区域，全屏
+    windowStage.getMainWindow().then((window) => {
+      window.setWindowLayoutFullScreen(true)
+    })
     // 开启子窗口
-    const subWindow = await windowStage.createSubWindow("ad_window")
-    subWindow.showWindow()
-    subWindow.setUIContent('pages/Index')
+    // const subWindow = await windowStage.createSubWindow("ad_window")
+    // subWindow.showWindow()
+    // subWindow.setUIContent('pages/Index')
+
     // 加载主页面
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
@@ -31,6 +36,12 @@ export default class EntryAbility extends UIAbility {
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content.');
     });
+  }
+
+
+  // 销毁窗口
+  closeWin() {
+    window.findWindow("ad_window").destroyWindow()
   }
 
   onWindowStageDestroy(): void {
