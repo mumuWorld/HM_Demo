@@ -83,6 +83,7 @@ struct Index {
           .onClick(() => {
             console.log('test-> router')
             let param = new PageRouterParam()
+            param.source = "首页"
             router.pushUrl({url: "pages/ResultPage", params: param})
           })
           Button('测试json')
