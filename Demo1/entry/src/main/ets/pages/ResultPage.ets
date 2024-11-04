@@ -1,13 +1,18 @@
 import { fileUri } from '@kit.CoreFileKit';
 import { resourceManager } from "@kit.LocalizationKit";
-import { router, window } from "@kit.ArkUI";
-import { DictResponse, ECDict, PurpleTr, SimpleWord } from "../model/DictModel";
+import { LengthMetrics, router, window } from "@kit.ArkUI";
+import { BlngSentsPart, DictResponse, ECDict,
+  HighLightText,
+  PurpleTr,
+  SentencePair,
+  SimpleWord,
+  TrsClassify} from "../model/DictModel";
 import { PhoneButton } from '../Views/PhoneButton';
-import { sim } from '@kit.TelephonyKit';
 import { NaviBar } from '../Views/NaviBar';
 import { PageRouterParam } from '../model/RouterModel';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import webview from '@ohos.web.webview';
+import util from '@ohos.util';
 
 
 @Entry
@@ -35,13 +40,45 @@ export struct ResultPage {
     let ec: ECDict = JSON.parse(ecStr)
     _dict.ec = ec
 
+    let blng_sents_part_str = "{\"sentenceCount\":6,\"sentencePair\":[{\"sentence\":\"I'm good at French.\",\"sentenceEng\":\"I'm <b>good</b> at French.\",\"sentenceTranslation\":\"我的法语很好。\",\"speech-size\":\"5kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"9\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"2\"},{\"@s\":\"10\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"3\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"3\",\"@e\":\"5\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"7\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"I%27m+good+at+French.&le=eng\"},{\"sentence\":\"I'm going to write good jokes and become a good comedian.\",\"sentenceEng\":\"I'm going to write <b>good</b> jokes and become a <b>good</b> comedian.\",\"sentenceTranslation\":\"我要创作出好的笑话并且成为一个优秀的喜剧演员。\",\"speech-size\":\"16kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"13\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"14\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"20\",\"@e\":\"24\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"25\",\"@e\":\"30\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"31\",\"@e\":\"34\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"35\",\"@e\":\"41\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"42\",\"@e\":\"43\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"44\",\"@e\":\"48\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"49\",\"@e\":\"57\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"3\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"8\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"8\",\"@e\":\"10\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"10\",\"@e\":\"12\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"12\",\"@e\":\"14\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"14\",\"@e\":\"16\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"16\",\"@e\":\"18\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"19\",\"@e\":\"23\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]}},\"source\":\"《柯林斯英汉双解大词典》\",\"url\":\"https://《柯林斯英汉双解大词典》/\",\"sentence-speech\":\"I%27m+going+to+write+good+jokes+and+become+a+good+comedian.&le=eng\"},{\"sentence\":\"He's sensationally good-looking!\",\"sentenceEng\":\"He's sensationally <b>good</b>-looking!\",\"sentenceTranslation\":\"他长得太帅了！\",\"speech-size\":\"9kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"6\",\"@e\":\"32\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"He%27s+sensationally+good-looking%21&le=eng\"}],\"more\":\"blng_sents\",\"trsClassify\":[{\"proportion\":\"100%\",\"tr\":\"全部\"},{\"proportion\":\"57.8%\",\"tr\":\"好\"},{\"proportion\":\"22.7%\",\"tr\":\"良好\"},{\"proportion\":\"8.4%\",\"tr\":\"很好的\"},{\"proportion\":\"5.4%\",\"tr\":\"不错\"},{\"proportion\":\"2.3%\",\"tr\":\"好处\"},{\"proportion\":\"1.3%\",\"tr\":\"善\"},{\"proportion\":\"1.3%\",\"tr\":\"优良\"},{\"proportion\":\"0.3%\",\"tr\":\"棒\"},{\"proportion\":\"0.3%\",\"tr\":\"利益\"},{\"proportion\":\"0.2%\",\"tr\":\"愉快的\"}]}"
+    // let bsp: BlngSentsPart = JSON.parse(blng_sents_part_str) as BlngSentsPart
+    let bsp: BlngSentsPart = BlngSentsPart.parseJson(blng_sents_part_str) as BlngSentsPart
+    _dict.blng_sents_part = bsp
+
+    this.getLocalJson()
+
     this.dict = _dict
+    this.selectedTrsClassifyTitle = bsp.trsClassify?.[0].tr ?? ""
+
     let _words: Array<string> = [];
     for (let index = 0; index < 100; index++) {
       _words.push("index: " + index)
     }
     this.words = _words
     // this.sw = _dict.simple?.word?.[0] ?? new SimpleWord()
+  }
+
+  getLocalJson() {
+    getContext(this).resourceManager.getRawFileContent("json/good.json", (error, data) => {
+      if (!error) {
+        console.log('test-> 读取失败', error)
+        return
+      }
+      if (data == undefined) {
+        console.log('test-> 读取失败222', error)
+        return
+      }
+
+      console.log('test->解析:0:', data)
+      let str = util.TextDecoder.create('utf-8', {ignoreBOM: true}).decodeToString(data, {stream: false})
+      try {
+        console.log('test->解析:1', str)
+        this.dict = JSON.parse(str)
+        console.log('test->解析: ', this.dict?.simple?.query)
+      } catch (e) {
+        console.log("test-> err",e)
+      }
+    })
   }
 
   aboutToAppear(): void {
@@ -110,32 +147,75 @@ export struct ResultPage {
     }, (item: PurpleTr) => JSON.stringify(item.tran))
   }
 
+  @State selectedTrsClassifyTitle: string = ""
+
+  @Builder
+  createSentence() {
+      ListItem() {
+        Column({space: 16}) {
+          Flex({wrap: FlexWrap.Wrap, space: {main: LengthMetrics.px(16), cross: LengthMetrics.px(16)}}) {
+            ForEach(this.dict.blng_sents_part?.trsClassify, (item: TrsClassify) => {
+              Button(item.tr, {type: ButtonType.Normal})
+                .fontSize(14)
+                .onClick(() => {
+
+                })
+                .height(30)
+                .borderRadius(10)
+                .backgroundColor(this.selectedTrsClassifyTitle == item.tr ? Color.Red : Color.Blue)
+            })
+          }
+          .margin({bottom: 20})
+
+
+          ForEach(this.dict.blng_sents_part?.sentencePair, (item: SentencePair) => {
+            Text() {
+              ForEach(item.parseAndHighlightText(), (htl: HighLightText) => {
+                Span(htl.str + " ")
+                  .fontColor(htl.isHighLight ? Color.Red : Color.Black)
+                  .fontSize(18)
+                  .onClick((event) => {
+                    console.log("test-> 点击:", htl.str)
+                  })
+              })
+            }
+            Text(item.sentenceTranslation)
+            Row(){
+              Text(item.source)
+
+              Row() {
+                Button("跟读", {type: ButtonType.Normal})
+                  .fontSize(14)
+                  .onClick(() => {
+
+                  })
+                  .backgroundColor(Color.Gray)
+                  .borderRadius(10)
+                  .height(30)
+
+                Button("收藏", {type: ButtonType.Normal})
+                  .fontSize(14)
+                  .onClick(() => {
+
+                  })
+                  .backgroundColor( Color.Gray)
+                  .borderRadius(10)
+                  .height(30)
+              }
+            }
+          })
+        }
+        .alignItems(HorizontalAlign.Start)
+        .margin({bottom: 20})
+      }
+  }
+
   @Builder
   listBuilder(item: string, index: number) {
     TabContent() {
       List({ space: CommonConstants.LIST_SPACE, scroller: this.scrollerForList }) {
         this.createTrans()
-
-        // ForEach(this.words, (rowName: string) => {
-        //   ListItem() {
-        //     Row() {
-        //       Text(item)
-        //         .fontSize($r('app.float.middle_font_size'))
-        //         .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
-        //       Text(rowName)
-        //         .fontSize($r('app.float.middle_font_size'))
-        //         .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
-        //     }
-        //     .padding({ left: $r('app.float.list_item_padding') })
-        //     .backgroundColor(Color.White)
-        //     .width(CommonConstants.FULL_WIDTH)
-        //     .height(CommonConstants.FULL_HEIGHT)
-        //     .borderRadius($r('app.float.list_item_radius'))
-        //
-        //   }
-        //   .width(CommonConstants.FULL_WIDTH)
-        //   .height($r('app.float.list_item_height'))
-        // }, (item: string) => JSON.stringify(item))
+        this.createSentence()
       }
       .padding({
         left: $r('app.float.list_padding'),

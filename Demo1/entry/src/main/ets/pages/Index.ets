@@ -3,6 +3,8 @@ import { router } from '@kit.ArkUI';
 import util from '@ohos.util';
 import { DictResponse } from '../model/DictModel';
 import { PageRouterParam } from  '../model/RouterModel'
+import { BusinessError } from '@kit.BasicServicesKit';
+import { common } from '@kit.AbilityKit';
 
 @Entry
 @Component
@@ -26,10 +28,43 @@ struct Index {
   }
 
   testJson() {
-    console.log('test->     json')
-    // let context = getContext() as common.UIAbilityContext;
+    let path = getContext().cacheDir
+    console.log('test->     json,:', path)
+    let _ctx = getContext(this)
+    console.log('test->     _ctx,:', _ctx)
+    getContext().resourceManager.getRawFileContent("rawfile/test.text", (error: BusinessError, value: Uint8Array) => {
+      if (error != null) {
+        console.error("test->getRawFileContent promise error is: " + error.name, "msg:", error.message, ",data:",
+          error.data, ",code:", error.code);
+      } else {
+        let rawFile = value;
+        console.log('test->读取成功1:',value)
+        let str = util.TextDecoder.create('utf-8', {ignoreBOM: true}).decodeToString(rawFile, {stream: false})
+        console.log('test->读取成功2:',str)
+      }
+    });
 
-    getContext(this).resourceManager.getRawFileContent("/good.json", (error, data) => {
+    let ctx = getContext()
+
+    console.log('test->   读取list ------------ ctx：', ctx)
+    try { // 传入""表示获取rawfile根目录下的文件列表
+      getContext(this).resourceManager.getRawFileList("", (error: BusinessError, value: Array<string>) => {
+        if (error != null) {
+          console.error(`test->callback getRawFileList failed, error code: ${error.code}, message: ${error.message}.`);
+        } else {
+          let rawFile = value;
+          console.log("test-> 读取list成功：", value)
+        }
+      });
+    } catch (error) {
+      let code = (error as BusinessError).code;
+      let message = (error as BusinessError).message;
+      console.error(`callback getRawFileList failed, error code: ${code}, message: ${message}.`);
+    }
+    console.log('test->   读取 ------------ json')
+
+    // let context = getContext() as common.UIAbilityContext;
+    getContext(this).resourceManager.getRawFileContent("test.text", (error, data) => {
       if (!error) {
         console.log('test-> 读取失败', error)
         return
@@ -52,7 +87,7 @@ struct Index {
 
     let jStr = "{\"simple\":{\"query\":\"good\",\"word\":[{\"usphone\":\"ɡʊd\",\"ukphone\":\"ɡʊd\",\"ukspeech\":\"good&type=1\",\"return-phrase\":\"good\",\"usspeech\":\"good&type=2\",\"collegeExamVoice\":{\"speechWord\":\"good\"}}]}}"
     this.dict = JSON.parse(jStr)
-    console.log("test->1111",this.dict?.simple?.query)
+    // console.log("test->1111",this.dict?.simple?.query)
   }
 
   build() {
