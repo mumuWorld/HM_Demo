@@ -2,6 +2,7 @@ export class DictResponse {
   simple?:           Simple;
   ec?: ECDict
   blng_sents_part?:  BlngSentsPart
+  musicSents?: MusicSents
 }
 
 export class Simple {
@@ -138,3 +139,30 @@ export class HighLightText {
   isHighLight: boolean = false
 }
 
+// mark 音乐例句
+
+export class MusicSents {
+  sentsData?: SentsDatum[];
+  more?:      boolean;
+  word?:      string;
+}
+
+export class SentsDatum {
+  songName?:         string;
+  lyricTranslation?: string;
+  singer?:           string;
+  coverImg?:         string;
+  supportCount?:     number;
+  lyric?:            string;
+  lyricList?:        LyricList[];
+  id?:               string;
+  songID?:           string;
+  playURL?:          string;
+}
+
+export class LyricList {
+  duration?:         number;
+  lyricTranslation?: string;
+  lyric?:            string;
+  start?:            number;
+}

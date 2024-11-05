@@ -32,6 +32,9 @@ struct Index {
     console.log('test->     json,:', path)
     let _ctx = getContext(this)
     console.log('test->     _ctx,:', _ctx)
+
+
+    // 次级文件夹可直接使用 json/good.json
     getContext().resourceManager.getRawFileContent("rawfile/test.text", (error: BusinessError, value: Uint8Array) => {
       if (error != null) {
         console.error("test->getRawFileContent promise error is: " + error.name, "msg:", error.message, ",data:",
@@ -43,6 +46,8 @@ struct Index {
         console.log('test->读取成功2:',str)
       }
     });
+
+
 
     let ctx = getContext()
 
