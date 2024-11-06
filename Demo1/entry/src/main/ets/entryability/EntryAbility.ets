@@ -20,9 +20,9 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
     // 忽略安全区域，全屏
-    windowStage.getMainWindow().then((window) => {
-      window.setWindowLayoutFullScreen(true)
-    })
+    // windowStage.getMainWindow().then((window) => {
+    //   window.setWindowLayoutFullScreen(true)
+    // })
     // 开启子窗口
     // const subWindow = await windowStage.createSubWindow("ad_window")
     // subWindow.showWindow()

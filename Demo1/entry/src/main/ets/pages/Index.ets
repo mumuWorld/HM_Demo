@@ -119,7 +119,7 @@ struct Index {
             let param = new PageRouterParam()
             this.pageStack.pushPath({ name: "ResultPage", param: param })
           })
-        Button('router')
+        Button('结果页')
           .onClick(() => {
             console.log('test-> router')
             let param = new PageRouterParam()
