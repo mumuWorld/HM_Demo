@@ -48,6 +48,46 @@
           ]
         }
       ]
+    },
+    {
+      "name": "NetFeature",
+      "srcPath": "./feature/NetFeature",
+    },
+    {
+      "name": "ShareTool",
+      "srcPath": "./feature/ShareTool",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "QueryTool",
+      "srcPath": "./feature/QueryTool",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ResultEntry",
+      "srcPath": "./feature/ResultEntry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

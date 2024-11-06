@@ -1,0 +1,50 @@
+{
+  "module": {
+    "name": "ResultEntry",
+    "type": "entry",
+    "description": "$string:module_desc",
+    "mainElement": "ResultEntryAbility",
+    "deviceTypes": [
+      "car"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "ResultEntryAbility",
+        "srcEntry": "./ets/resultentryability/ResultEntryAbility.ets",
+        "description": "$string:ResultEntryAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:ResultEntryAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ]
+      }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "ResultEntryBackupAbility",
+        "srcEntry": "./ets/resultentrybackupability/ResultEntryBackupAbility.ets",
+        "type": "backup",
+        "exported": false,
+        "metadata": [
+          {
+            "name": "ohos.extension.backup",
+            "resource": "$profile:backup_config"
+          }
+        ],
+      }
+    ]
+  }
+}
