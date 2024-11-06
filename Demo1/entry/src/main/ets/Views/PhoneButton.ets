@@ -1,27 +1,26 @@
-import { Simple, SimpleWord } from "../model/DictModel"
+import { SimpleWord } from "../model/DictModel"
 
 @Component
 export struct PhoneButton {
 
-  @State sw: SimpleWord = new SimpleWord()
-
-  constructor(sw?: SimpleWord) {
-    super()
-    this.sw = sw ?? new SimpleWord()
-  }
+  sw?: SimpleWord = new SimpleWord()
 
   build() {
       Row() {
-        Text(`英/${this.sw?.ukphone}/`)
-          .backgroundColor(Color.Gray)
-          .borderRadius(4)
-          .height(20)
+        if (this.sw?.ukphone) {
+          Text(`英/${this.sw?.ukphone}/`)
+            .backgroundColor(Color.Gray)
+            .borderRadius(4)
+            .height(20)
+        }
 
-        Text(`美/${this.sw?.usphone}/`)
-          .backgroundColor(Color.Gray)
-          .borderRadius(4)
-          .height(20)
-          .margin({left: 20})
+        if (this.sw?.usphone) {
+          Text(`美/${this.sw?.usphone}/`)
+            .backgroundColor(Color.Gray)
+            .borderRadius(4)
+            .height(20)
+            .margin({left: 20})
+        }
       }
   }
 }

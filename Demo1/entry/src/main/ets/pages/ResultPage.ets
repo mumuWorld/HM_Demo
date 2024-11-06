@@ -1,14 +1,18 @@
 import { fileUri } from '@kit.CoreFileKit';
 import { resourceManager } from "@kit.LocalizationKit";
 import { LengthMetrics, router, window } from "@kit.ArkUI";
-import { BlngSentsPart, DictResponse, ECDict,
+import {
+  BlngSentsPart,
+  DictResponse,
+  ECDict,
   HighLightText,
   MusicSents,
   PurpleTr,
   SentencePair,
   SentsDatum,
   SimpleWord,
-  TrsClassify} from "../model/DictModel";
+  TrsClassify
+} from "../model/DictModel";
 import { PhoneButton } from '../Views/PhoneButton';
 import { NaviBar } from '../Views/NaviBar';
 import { PageRouterParam } from '../model/RouterModel';
@@ -44,11 +48,14 @@ export struct ResultPage {
     let ec: ECDict = JSON.parse(ecStr)
     _dict.ec = ec
 
-    let blng_sents_part_str = "{\"sentenceCount\":6,\"sentencePair\":[{\"sentence\":\"I'm good at French.\",\"sentenceEng\":\"I'm <b>good</b> at French.\",\"sentenceTranslation\":\"我的法语很好。\",\"speech-size\":\"5kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"9\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"2\"},{\"@s\":\"10\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"3\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"3\",\"@e\":\"5\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"7\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"I%27m+good+at+French.&le=eng\"},{\"sentence\":\"I'm going to write good jokes and become a good comedian.\",\"sentenceEng\":\"I'm going to write <b>good</b> jokes and become a <b>good</b> comedian.\",\"sentenceTranslation\":\"我要创作出好的笑话并且成为一个优秀的喜剧演员。\",\"speech-size\":\"16kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"13\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"14\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"20\",\"@e\":\"24\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"25\",\"@e\":\"30\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"31\",\"@e\":\"34\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"35\",\"@e\":\"41\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"42\",\"@e\":\"43\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"44\",\"@e\":\"48\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"49\",\"@e\":\"57\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"3\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"8\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"8\",\"@e\":\"10\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"10\",\"@e\":\"12\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"12\",\"@e\":\"14\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"14\",\"@e\":\"16\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"16\",\"@e\":\"18\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"19\",\"@e\":\"23\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]}},\"source\":\"《柯林斯英汉双解大词典》\",\"url\":\"https://《柯林斯英汉双解大词典》/\",\"sentence-speech\":\"I%27m+going+to+write+good+jokes+and+become+a+good+comedian.&le=eng\"},{\"sentence\":\"He's sensationally good-looking!\",\"sentenceEng\":\"He's sensationally <b>good</b>-looking!\",\"sentenceTranslation\":\"他长得太帅了！\",\"speech-size\":\"9kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"6\",\"@e\":\"32\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"He%27s+sensationally+good-looking%21&le=eng\"}],\"more\":\"blng_sents\",\"trsClassify\":[{\"proportion\":\"100%\",\"tr\":\"全部\"},{\"proportion\":\"57.8%\",\"tr\":\"好\"},{\"proportion\":\"22.7%\",\"tr\":\"良好\"},{\"proportion\":\"8.4%\",\"tr\":\"很好的\"},{\"proportion\":\"5.4%\",\"tr\":\"不错\"},{\"proportion\":\"2.3%\",\"tr\":\"好处\"},{\"proportion\":\"1.3%\",\"tr\":\"善\"},{\"proportion\":\"1.3%\",\"tr\":\"优良\"},{\"proportion\":\"0.3%\",\"tr\":\"棒\"},{\"proportion\":\"0.3%\",\"tr\":\"利益\"},{\"proportion\":\"0.2%\",\"tr\":\"愉快的\"}]}"
+    let blng_sents_part_str =
+      "{\"sentenceCount\":6,\"sentencePair\":[{\"sentence\":\"I'm good at French.\",\"sentenceEng\":\"I'm <b>good</b> at French.\",\"sentenceTranslation\":\"我的法语很好。\",\"speech-size\":\"5kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"9\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"2\"},{\"@s\":\"10\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"3\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"3\",\"@e\":\"5\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"7\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"I%27m+good+at+French.&le=eng\"},{\"sentence\":\"I'm going to write good jokes and become a good comedian.\",\"sentenceEng\":\"I'm going to write <b>good</b> jokes and become a <b>good</b> comedian.\",\"sentenceTranslation\":\"我要创作出好的笑话并且成为一个优秀的喜剧演员。\",\"speech-size\":\"16kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"4\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"13\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"14\",\"@e\":\"19\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"20\",\"@e\":\"24\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"25\",\"@e\":\"30\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"31\",\"@e\":\"34\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"35\",\"@e\":\"41\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"42\",\"@e\":\"43\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"44\",\"@e\":\"48\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"49\",\"@e\":\"57\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"2\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"},{\"@s\":\"3\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"2\"}],\"tc\":[{\"@id\":\"2\"}]},\"@id\":\"2\"},{\"@s\":\"6\",\"@e\":\"8\",\"aligns\":{\"sc\":[{\"@id\":\"3\"}],\"tc\":[{\"@id\":\"3\"}]},\"@id\":\"3\"},{\"@s\":\"8\",\"@e\":\"10\",\"aligns\":{\"sc\":[{\"@id\":\"4\"}],\"tc\":[{\"@id\":\"4\"}]},\"@id\":\"4\"},{\"@s\":\"10\",\"@e\":\"12\",\"aligns\":{\"sc\":[{\"@id\":\"5\"}],\"tc\":[{\"@id\":\"5\"}]},\"@id\":\"5\"},{\"@s\":\"12\",\"@e\":\"14\",\"aligns\":{\"sc\":[{\"@id\":\"6\"}],\"tc\":[{\"@id\":\"6\"}]},\"@id\":\"6\"},{\"@s\":\"14\",\"@e\":\"16\",\"aligns\":{\"sc\":[{\"@id\":\"7\"}],\"tc\":[{\"@id\":\"7\"}]},\"@id\":\"7\"},{\"@s\":\"16\",\"@e\":\"18\",\"aligns\":{\"sc\":[{\"@id\":\"8\"}],\"tc\":[{\"@id\":\"8\"}]},\"@id\":\"8\"},{\"@s\":\"19\",\"@e\":\"23\",\"aligns\":{\"sc\":[{\"@id\":\"9\"}],\"tc\":[{\"@id\":\"9\"}]},\"@id\":\"9\"}]}},\"source\":\"《柯林斯英汉双解大词典》\",\"url\":\"https://《柯林斯英汉双解大词典》/\",\"sentence-speech\":\"I%27m+going+to+write+good+jokes+and+become+a+good+comedian.&le=eng\"},{\"sentence\":\"He's sensationally good-looking!\",\"sentenceEng\":\"He's sensationally <b>good</b>-looking!\",\"sentenceTranslation\":\"他长得太帅了！\",\"speech-size\":\"9kb\",\"aligned-words\":{\"src\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"3\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"6\",\"@e\":\"32\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]},\"tran\":{\"chars\":[{\"@s\":\"1\",\"@e\":\"2\",\"aligns\":{\"sc\":[{\"@id\":\"0\"}],\"tc\":[{\"@id\":\"0\"}]},\"@id\":\"0\"},{\"@s\":\"5\",\"@e\":\"6\",\"aligns\":{\"sc\":[{\"@id\":\"1\"}],\"tc\":[{\"@id\":\"1\"}]},\"@id\":\"1\"}]}},\"source\":\"《牛津词典》\",\"url\":\"https://《牛津词典》/\",\"sentence-speech\":\"He%27s+sensationally+good-looking%21&le=eng\"}],\"more\":\"blng_sents\",\"trsClassify\":[{\"proportion\":\"100%\",\"tr\":\"全部\"},{\"proportion\":\"57.8%\",\"tr\":\"好\"},{\"proportion\":\"22.7%\",\"tr\":\"良好\"},{\"proportion\":\"8.4%\",\"tr\":\"很好的\"},{\"proportion\":\"5.4%\",\"tr\":\"不错\"},{\"proportion\":\"2.3%\",\"tr\":\"好处\"},{\"proportion\":\"1.3%\",\"tr\":\"善\"},{\"proportion\":\"1.3%\",\"tr\":\"优良\"},{\"proportion\":\"0.3%\",\"tr\":\"棒\"},{\"proportion\":\"0.3%\",\"tr\":\"利益\"},{\"proportion\":\"0.2%\",\"tr\":\"愉快的\"}]}"
     // let bsp: BlngSentsPart = JSON.parse(blng_sents_part_str)
     let bsp: BlngSentsPart = BlngSentsPart.parseJson(blng_sents_part_str) as BlngSentsPart
+    _dict.blng_sents_part = bsp
 
-    let musicStr = "{\"sentsData\":[{\"songName\":\"Moon Halo\",\"lyricTranslation\":\"当希望和信念羽翼丰满，就向昨日告别吧\",\"singer\":\"茶理理\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/a994cd227f3606739d61d99adee59f4f.jpg?imageView=&type=webp\",\"supportCount\":164,\"lyric\":\"Wave <b>good</b>-bye to the past when hope and faith have grown so strong and sound\",\"lyricList\":[{\"duration\":7040,\"lyricTranslation\":\"当希望和信念羽翼丰满，就向昨日告别吧\",\"lyric\":\"Wave <b>good</b>-bye to the past when hope and faith have grown so strong and sound\",\"start\":0},{\"duration\":4080,\"lyricTranslation\":\"再一次为我张开这双羽翼\",\"lyric\":\"Unfold this pair of wings for me again\",\"start\":7040}],\"id\":\"765ded2022\",\"songId\":\"2BE4FFDDFF93A7B24E65692F888904E1\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2F7267b9d86fc6eb5dc24f0643aaaaa4f5.mp3\"},{\"songName\":\"Here With You\",\"lyricTranslation\":\"记忆中从未感觉如此美好\",\"singer\":\"Asher Monroe\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/517bbf8781b8afd5e3b7a3152501ac4e.jpg?imageView=&type=webp\",\"supportCount\":48,\"lyric\":\"Ain't felt this <b>good</b> since I remember\",\"lyricList\":[{\"duration\":3440,\"lyricTranslation\":\"记忆中从未感觉如此美好\",\"lyric\":\"Ain't felt this <b>good</b> since I remember\",\"start\":0},{\"duration\":3760,\"lyricTranslation\":\"你的到来让今夜变得闪亮\",\"lyric\":\"This night got started when you entered\",\"start\":3440}],\"id\":\"f940ab281d\",\"songId\":\"30D224D8DAA2D89F67C628330C0DA832\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2Fcfd0512e9511ef977aa2893829df3118.mp3\"},{\"songName\":\"Gravity (feat. JMR)\",\"lyricTranslation\":\"给我一个能让我信服的理由让我接受内心的轻缓迟迟不来的事实\",\"singer\":\"Jai Wolf\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/6f364f234bf0674c682a6a55779c8de8.jpg?imageView=&type=webp\",\"supportCount\":48,\"lyric\":\"Then tell me one <b>good</b> reason why the reprieve for heart and mind isn't near us\",\"lyricList\":[{\"duration\":7620,\"lyricTranslation\":\"给我一个能让我信服的理由让我接受内心的轻缓迟迟不来的事实\",\"lyric\":\"Then tell me one <b>good</b> reason why the reprieve for heart and mind isn't near us\",\"start\":0},{\"duration\":2090,\"lyricTranslation\":\"我能听见你灵魂深处的声音\",\"lyric\":\"I hear your voice from the balcony\",\"start\":7620}],\"id\":\"5d0a366732\",\"songId\":\"D04F250D6C9E51849B36FBE1B57F3744\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2F1ac336bdabc15c53baa466ad972cebe0.mp3\"}],\"more\":true,\"word\":\"good\"}"
+    let musicStr =
+      "{\"sentsData\":[{\"songName\":\"Moon Halo\",\"lyricTranslation\":\"当希望和信念羽翼丰满，就向昨日告别吧\",\"singer\":\"茶理理\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/a994cd227f3606739d61d99adee59f4f.jpg?imageView=&type=webp\",\"supportCount\":164,\"lyric\":\"Wave <b>good</b>-bye to the past when hope and faith have grown so strong and sound\",\"lyricList\":[{\"duration\":7040,\"lyricTranslation\":\"当希望和信念羽翼丰满，就向昨日告别吧\",\"lyric\":\"Wave <b>good</b>-bye to the past when hope and faith have grown so strong and sound\",\"start\":0},{\"duration\":4080,\"lyricTranslation\":\"再一次为我张开这双羽翼\",\"lyric\":\"Unfold this pair of wings for me again\",\"start\":7040}],\"id\":\"765ded2022\",\"songId\":\"2BE4FFDDFF93A7B24E65692F888904E1\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2F7267b9d86fc6eb5dc24f0643aaaaa4f5.mp3\"},{\"songName\":\"Here With You\",\"lyricTranslation\":\"记忆中从未感觉如此美好\",\"singer\":\"Asher Monroe\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/517bbf8781b8afd5e3b7a3152501ac4e.jpg?imageView=&type=webp\",\"supportCount\":48,\"lyric\":\"Ain't felt this <b>good</b> since I remember\",\"lyricList\":[{\"duration\":3440,\"lyricTranslation\":\"记忆中从未感觉如此美好\",\"lyric\":\"Ain't felt this <b>good</b> since I remember\",\"start\":0},{\"duration\":3760,\"lyricTranslation\":\"你的到来让今夜变得闪亮\",\"lyric\":\"This night got started when you entered\",\"start\":3440}],\"id\":\"f940ab281d\",\"songId\":\"30D224D8DAA2D89F67C628330C0DA832\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2Fcfd0512e9511ef977aa2893829df3118.mp3\"},{\"songName\":\"Gravity (feat. JMR)\",\"lyricTranslation\":\"给我一个能让我信服的理由让我接受内心的轻缓迟迟不来的事实\",\"singer\":\"Jai Wolf\",\"coverImg\":\"https://ydlunacommon-cdn.nosdn.127.net/6f364f234bf0674c682a6a55779c8de8.jpg?imageView=&type=webp\",\"supportCount\":48,\"lyric\":\"Then tell me one <b>good</b> reason why the reprieve for heart and mind isn't near us\",\"lyricList\":[{\"duration\":7620,\"lyricTranslation\":\"给我一个能让我信服的理由让我接受内心的轻缓迟迟不来的事实\",\"lyric\":\"Then tell me one <b>good</b> reason why the reprieve for heart and mind isn't near us\",\"start\":0},{\"duration\":2090,\"lyricTranslation\":\"我能听见你灵魂深处的声音\",\"lyric\":\"I hear your voice from the balcony\",\"start\":7620}],\"id\":\"5d0a366732\",\"songId\":\"D04F250D6C9E51849B36FBE1B57F3744\",\"playUrl\":\"https://dict.youdao.com/dictserver/sentencemusic/playUrl?redirectUrl=https%3A%2F%2Fydlunacommon-cdn.nosdn.127.net%2F1ac336bdabc15c53baa466ad972cebe0.mp3\"}],\"more\":true,\"word\":\"good\"}"
     let music: MusicSents = JSON.parse(musicStr)
     _dict.musicSents = music
 
@@ -77,13 +84,13 @@ export struct ResultPage {
       }
 
       console.log('test->解析:0:', data)
-      let str = util.TextDecoder.create('utf-8', {ignoreBOM: true}).decodeToString(data, {stream: false})
+      let str = util.TextDecoder.create('utf-8', { ignoreBOM: true }).decodeToString(data, { stream: false })
       try {
         console.log('test->解析:1', str)
         this.dict = JSON.parse(str)
         console.log('test->解析: ', this.dict?.simple?.query)
       } catch (e) {
-        console.log("test-> err",e)
+        console.log("test-> err", e)
       }
     })
   }
@@ -135,67 +142,78 @@ export struct ResultPage {
 
   @Builder
   createTrans() {
-    ForEach(this.dict.ec?.word?.trs, (item: PurpleTr) => {
-      ListItem() {
-        Row() {
-          if (item.pos != null) {
-            Text(item.pos)
-              .fontSize($r('app.float.middle_font_size'))
-              .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
-              .width(60)
-          }
-          Text(item.tran)
-            .fontSize($r('app.float.middle_font_size'))
-            .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
+    ListItem() {
+      Column() {
+        Column() {
+          ForEach(this.dict.ec?.word?.trs, (item: PurpleTr) => {
+            Row() {
+              if (item.pos != null) {
+                Text(item.pos)
+                  .fontSize($r('app.float.middle_font_size'))
+                  .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
+                  .width(60)
+              }
+              Text(item.tran)
+                .fontSize($r('app.float.middle_font_size'))
+                .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
+            }
+            .justifyContent(FlexAlign.Start)
+            .alignItems(VerticalAlign.Top)
+
+          }, (item: PurpleTr) => JSON.stringify(item.tran))
         }
-        .justifyContent(FlexAlign.Start)
-        .alignItems(VerticalAlign.Top)
+        // .padding({
+        //   left: $r('app.float.list_padding'),
+        //   right: $r('app.float.list_padding')
+        // })
+      }
+      // .padding(15)
     }
-    }, (item: PurpleTr) => JSON.stringify(item.tran))
   }
 
   @State selectedTrsClassifyTitle: string = ""
 
   @Builder
   createSentence() {
-      ListItem() {
-        Column({space: 16}) {
-          Flex({wrap: FlexWrap.Wrap, space: {main: LengthMetrics.px(16), cross: LengthMetrics.px(16)}}) {
-            ForEach(this.dict.blng_sents_part?.trsClassify, (item: TrsClassify) => {
-              Button(item.tr, {type: ButtonType.Normal})
-                .fontSize(14)
-                .onClick(() => {
-
-                })
-                .height(30)
-                .borderRadius(10)
-                .backgroundColor(this.selectedTrsClassifyTitle == item.tr ? Color.Red : Color.Blue)
-            })
-          }
-          .margin({bottom: 20})
-
-          ForEach(this.dict.blng_sents_part?.sentencePair, (item: SentencePair) => {
-            SentenceCell(item)
+    ListItem() {
+      Column({ space: 16 }) {
+        Flex({ wrap: FlexWrap.Wrap, space: { main: LengthMetrics.px(16), cross: LengthMetrics.px(16) } }) {
+          ForEach(this.dict.blng_sents_part?.trsClassify, (item: TrsClassify) => {
+            Button(item.tr, { type: ButtonType.Normal })
+              .fontSize(14)
+              .onClick(() => {
+                  this.selectedTrsClassifyTitle = item.tr ?? "出错"
+              })
+              .height(30)
+              .borderRadius(10)
+              .backgroundColor(this.selectedTrsClassifyTitle == item.tr ? Color.Red : Color.Gray)
           })
         }
-        .alignItems(HorizontalAlign.Start)
-        .margin({bottom: 20})
+        .margin({ bottom: 20 })
+
+        ForEach(this.dict.blng_sents_part?.sentencePair, (item: SentencePair) => {
+          SentenceCell({item: item})
+        })
       }
+      .alignItems(HorizontalAlign.Start)
+      .margin({ bottom: 20 })
+    }
   }
 
   @Builder
-  createMuisc() {
+  createMusic() {
     ListItem() {
-      Column() {
+      Column({space: CommonConstants.COMMON_SPACING}) {
         Text("音乐例句")
           .fontSize(20)
-          .margin({bottom: 16})
+          .fontWeight(CommonConstants.FONT_WEIGHT_FIVE)
+          .margin({ bottom: 16 })
 
-        ForEach(this.dict.musicSents?.sentsData, (item: SentsDatum) => {
-          MusicCell(item)
+        ForEach(this.dict.musicSents?.sentsData, (sentence: SentsDatum) => {
+          MusicCell({sentence: sentence})
         })
 
-        Button({type: ButtonType.Normal}) {
+        Button({ type: ButtonType.Normal }) {
           Row() {
             Text("查看更多")
           }
@@ -206,17 +224,13 @@ export struct ResultPage {
   }
 
   @Builder
-  listBuilder(item: string, index: number) {
+  tabContentBuilder(item: string, index: number) {
     TabContent() {
       List({ space: CommonConstants.LIST_SPACE, scroller: this.scrollerForList }) {
         this.createTrans()
         this.createSentence()
-        this.createMuisc()
+        this.createMusic()
       }
-      .padding({
-        left: $r('app.float.list_padding'),
-        right: $r('app.float.list_padding')
-      })
       .width(CommonConstants.FULL_WIDTH)
       .height(CommonConstants.FULL_HEIGHT)
       .edgeEffect(EdgeEffect.None)
@@ -232,7 +246,7 @@ export struct ResultPage {
   @Builder
   listWebBuilder(item: string, index: number) {
     TabContent() {
-      Web({ src: "https://www.example.com/", controller: this.webviewController, renderMode: RenderMode.ASYNC_RENDER })
+      Web({ src: "https://baidu.com/", controller: this.webviewController, renderMode: RenderMode.ASYNC_RENDER })
     }
     .tabBar(this.tabBuilder(index, item))
   }
@@ -253,13 +267,13 @@ export struct ResultPage {
       Stack({ alignContent: Alignment.Top }) {
         Scroll(this.scrollerForScroll) {
           Column() {
-            PhoneButton(this.dict.simple?.word?.[0] ?? new SimpleWord())
+            PhoneButton({sw: this.dict.simple?.word?.[0]})
               .margin({ top: $r("app.float.common_spacing") })
 
             Tabs() {
               ForEach(["简明", "牛津", "新牛津"], (item: string, index: number) => {
                 if (index == 0) {
-                  this.listBuilder(item, index)
+                  this.tabContentBuilder(item, index)
                 } else {
                   this.listWebBuilder(item, index)
                 }
@@ -277,12 +291,13 @@ export struct ResultPage {
         .scrollBar(BarState.Off)
         .width(CommonConstants.FULL_WIDTH)
         .height(CommonConstants.FULL_HEIGHT)
+        .padding({bottom: this.bottomArea + 20})
       }
+      .backgroundColor(Color.Pink)
       .width(CommonConstants.FULL_WIDTH)
-      .height(CommonConstants.STACK_HEIGHT)
+      .height("calc(100% - 80vp)")
 
     }
-    .padding({ left: $r("app.float.common_spacing"), right: $r("app.float.common_spacing") })
     .width('100%')
     .height('100%')
     .alignItems(HorizontalAlign.Start)

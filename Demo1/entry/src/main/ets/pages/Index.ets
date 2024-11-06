@@ -96,7 +96,7 @@ struct Index {
   }
 
   build() {
-    Column() {
+    Column({space: 10}) {
       Text(this.message)
         .id('HelloWorld')
         .fontSize(50)

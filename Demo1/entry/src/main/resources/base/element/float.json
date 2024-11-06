@@ -67,6 +67,10 @@
     {
       "name": "common_spacing",
       "value": "8vp"
+    },
+    {
+      "name": "common_max_spacing",
+      "value": "8vp"
     }
   ]
 }

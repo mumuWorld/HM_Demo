@@ -82,4 +82,10 @@ export class CommonConstants {
    * Height the percentage of the 100.
    */
   static readonly FULL_HEIGHT: string = '100%';
+
+
+  static readonly COMMON_SPACING: string = '16vp';
+
+  static readonly COMMON_MIN_SPACING: string = '8vp';
+
 }
