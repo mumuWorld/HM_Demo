@@ -16,7 +16,6 @@ export class SimpleWord {
   ukspeech?:        string;
 
   "return-phrase"?: string;
-  // multiPhone?:      MultiPhone;
   usspeech?:        string;
 
   constructor() {

@@ -5,7 +5,7 @@ import { UserSetting } from 'basic/src/main/ets/utils/UserSetting';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    hilog.info(0x0000, 'testTag', '%{public}s', 'test->Ability onCreate', want.action,);
   }
 
   onDestroy(): void {

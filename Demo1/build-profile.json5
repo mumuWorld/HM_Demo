@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/yangjie01/.ohos/config/default_Demo1_oWTJaF6lzBlnKFyFCpZI9irltm2h2TDEMA9RcPvKhSI=.cer",
+          "storePassword": "0000001AF65332A45038C58C3664125EB41B39EA8E338FBC0BF568FABA75CB738F718C7F875ABF367D8D",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001ABC20D5F23A25D1F66113C202D031517670E64A346F2CB2D25943CCB15EAD4B3F430B5EBF4D95",
+          "profile": "/Users/yangjie01/.ohos/config/default_Demo1_oWTJaF6lzBlnKFyFCpZI9irltm2h2TDEMA9RcPvKhSI=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/yangjie01/.ohos/config/default_Demo1_oWTJaF6lzBlnKFyFCpZI9irltm2h2TDEMA9RcPvKhSI=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
@@ -50,10 +64,6 @@
       ]
     },
     {
-      "name": "NetFeature",
-      "srcPath": "./feature/NetFeature",
-    },
-    {
       "name": "ShareTool",
       "srcPath": "./feature/ShareTool",
       "targets": [
@@ -66,8 +76,8 @@
       ]
     },
     {
-      "name": "QueryTool",
-      "srcPath": "./feature/QueryTool",
+      "name": "FeatureTool",
+      "srcPath": "./feature/FeatureTool",
       "targets": [
         {
           "name": "default",
@@ -78,16 +88,8 @@
       ]
     },
     {
-      "name": "ResultEntry",
-      "srcPath": "./feature/ResultEntry",
-      "targets": [
-        {
-          "name": "default",
-          "applyToProducts": [
-            "default"
-          ]
-        }
-      ]
+      "name": "StaticShareTool",
+      "srcPath": "./feature/StaticShareTool",
     }
   ]
 }

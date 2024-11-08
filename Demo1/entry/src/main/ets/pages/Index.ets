@@ -1,10 +1,13 @@
-import { ResultPage } from './ResultPage';
-import { router } from '@kit.ArkUI';
+import { ResultPage } from '../model/ResultPage';
+import { router, window } from '@kit.ArkUI';
 import util from '@ohos.util';
 import { DictResponse } from '../model/DictModel';
-import { PageRouterParam } from  '../model/RouterModel'
+import { PageRouterParam, PageRouterParamMdoel } from '../model/RouterModel'
 import { BusinessError } from '@kit.BasicServicesKit';
 import { common } from '@kit.AbilityKit';
+import Logger from '../common/Logger';
+import { NaviBar } from '../Views/NaviBar';
+// import 'basic/src/main/ets/pages/Index' // 引入共享包library中的命名路由页面
 
 @Entry
 @Component
@@ -12,19 +15,106 @@ struct Index {
   @State message: string = 'Hello World';
   @State word: string = '';
   @Provide('NavPathStack') pageStack: NavPathStack = new NavPathStack()
-
+  @StorageLink('topArea') topArea: number = 0;
   dict?: DictResponse
 
-  @Builder
-  PagesMap(name: string, param: PageRouterParam) {
-    if (name == 'ResultPage') {
-      ResultPage()
-    }
-  }
   aboutToAppear(): void {
+    window.getLastWindow(getContext(this)).then((windowStage: window.Window) => {
+      let area = windowStage.getWindowAvoidArea(window.AvoidAreaType.TYPE_SYSTEM);
+      this.topArea = px2vp(area.topRect.height);
+      let bottom = windowStage.getWindowAvoidArea(window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR);
+      // this.bottomArea = px2vp(bottom.bottomRect.height);
+      //
+      // console.log("test-> 安全区域高度: ", this.topArea, "底部：", this.bottomArea)
+      if (this.topArea > 0) {
+        windowStage.setWindowLayoutFullScreen(true);
+      }
+    });
   }
 
   aboutToDisappear(): void {
+  }
+
+  build() {
+    Column({ space: 10 }) {
+      NaviBar({ backTitle: "首页", showBack: false })
+        .height(44)
+        .margin({ top: this.topArea })
+
+      Text(this.message)
+        .id('HelloWorld')
+        .fontSize(50)
+        .fontWeight(FontWeight.Bold)
+        .alignRules({
+          center: { anchor: '__container__', align: VerticalAlign.Center },
+          middle: { anchor: '__container__', align: HorizontalAlign.Center }
+        })
+        .align(Alignment.Center)
+        .backgroundColor(Color.White)
+      // Navigation(this.pageStack) {
+      TextInput({ placeholder: "输入查询单词", text: this.word })
+        .onSubmit((type) => {
+          if (this.word.length < 1) {
+            return
+          }
+          let param: PageRouterParam = {
+            source: "首页"
+          }
+          this.pageStack.pushPath({ name: "ResultPage", param: param })
+        })
+      Button('HAP跳转')
+        .onClick(() => {
+          let ctx = getContext(this) as common.UIAbilityContext
+          ctx.startAbilityForResult({
+            bundleName: "com.example.mmappdemo",
+            abilityName: "FeatureToolAbility",
+            action: "OCR",
+            parameters: { "key1": "value1" }
+          }).then((reslut) => {
+            console.log("test-> 收到ability 回调: ", reslut.want?.action, reslut.want?.parameters?.["info"])
+          }).catch((error: BusinessError) => {
+            Logger.error("index", 'test->start audio ability failed, error: ' + JSON.stringify(error))
+          })
+        })
+      Button('结果页')
+        .onClick(() => {
+          console.log('test-> router')
+          let param: PageRouterParam = {
+            source: "首页"
+          }
+          router.pushUrl({ url: "model/ResultPage", params: param })
+        })
+      Button('HAR包: 绝对路径跳转')
+        .onClick(() => {
+          console.log('test-> router')
+          let param: PageRouterParam = {
+            source: "首页"
+          }
+          router.pushUrl({ url: "@bundle:com.example.mmappdemo/basic/ets/pages/Index", params: param })
+        })
+      Button('HAR包: 页面别名跳转')
+        .onClick(() => {
+          console.log('test-> router')
+          let param: PageRouterParam = {
+            source: "首页"
+          }
+          router.pushNamedRoute({name:"BasicIndexPage",params: param})
+        })
+      Button('测试json')
+        .onClick(() => {
+          this.testJson()
+          // router.pushUrl({url: "pages/TestPage"},router.RouterMode.Standard, (error) => {
+          //   console.log('test-> error: ', error)
+          // })
+        })
+      // }
+      // .mode(NavigationMode.Stack)
+      // .navDestination(this.PagesMap)
+
+
+    }
+    .height('100%')
+    .width('100%')
   }
 
   testJson() {
@@ -41,13 +131,11 @@ struct Index {
           error.data, ",code:", error.code);
       } else {
         let rawFile = value;
-        console.log('test->读取成功1:',value)
-        let str = util.TextDecoder.create('utf-8', {ignoreBOM: true}).decodeToString(rawFile, {stream: false})
-        console.log('test->读取成功2:',str)
+        console.log('test->读取成功1:', value)
+        let str = util.TextDecoder.create('utf-8', { ignoreBOM: true }).decodeToString(rawFile, { stream: false })
+        console.log('test->读取成功2:', str)
       }
     });
-
-
 
     let ctx = getContext()
 
@@ -80,66 +168,19 @@ struct Index {
       }
 
       console.log('test->解析:0:', data)
-      let str = util.TextDecoder.create('utf-8', {ignoreBOM: true}).decodeToString(data, {stream: false})
+      let str = util.TextDecoder.create('utf-8', { ignoreBOM: true }).decodeToString(data, { stream: false })
       try {
         console.log('test->解析:1', str)
         this.dict = JSON.parse(str)
         console.log('test->解析: ', this.dict?.simple?.query)
       } catch (e) {
-        console.log("test-> err",e)
+        console.log("test-> err", e)
       }
     })
 
-    let jStr = "{\"simple\":{\"query\":\"good\",\"word\":[{\"usphone\":\"ɡʊd\",\"ukphone\":\"ɡʊd\",\"ukspeech\":\"good&type=1\",\"return-phrase\":\"good\",\"usspeech\":\"good&type=2\",\"collegeExamVoice\":{\"speechWord\":\"good\"}}]}}"
+    let jStr =
+      "{\"simple\":{\"query\":\"good\",\"word\":[{\"usphone\":\"ɡʊd\",\"ukphone\":\"ɡʊd\",\"ukspeech\":\"good&type=1\",\"return-phrase\":\"good\",\"usspeech\":\"good&type=2\",\"collegeExamVoice\":{\"speechWord\":\"good\"}}]}}"
     this.dict = JSON.parse(jStr)
     // console.log("test->1111",this.dict?.simple?.query)
-  }
-
-  build() {
-    Column({space: 10}) {
-      Text(this.message)
-        .id('HelloWorld')
-        .fontSize(50)
-        .fontWeight(FontWeight.Bold)
-        .alignRules({
-          center: { anchor: '__container__', align: VerticalAlign.Center },
-          middle: { anchor: '__container__', align: HorizontalAlign.Center }
-        })
-      // Navigation(this.pageStack) {
-        TextInput({ placeholder: "输入查询单词", text: this.word })
-          .onSubmit((type) => {
-            if (this.word.length < 1) {
-              return
-            }
-            let param = new PageRouterParam()
-            this.pageStack.pushPath({ name: "ResultPage", param: param })
-          })
-        Button('跳转')
-          .onClick(()=>{
-            let param = new PageRouterParam()
-            this.pageStack.pushPath({ name: "ResultPage", param: param })
-          })
-        Button('结果页')
-          .onClick(() => {
-            console.log('test-> router')
-            let param = new PageRouterParam()
-            param.source = "首页"
-            router.pushUrl({url: "pages/ResultPage", params: param})
-          })
-          Button('测试json')
-            .onClick(() => {
-                this.testJson()
-              // router.pushUrl({url: "pages/TestPage"},router.RouterMode.Standard, (error) => {
-              //   console.log('test-> error: ', error)
-              // })
-            })
-      // }
-      // .mode(NavigationMode.Stack)
-      // .navDestination(this.PagesMap)
-
-
-    }
-    .height('100%')
-    .width('100%')
   }
 }

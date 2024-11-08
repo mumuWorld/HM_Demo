@@ -1,0 +1,29 @@
+{
+  "module": {
+    "name": "FeatureTool",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "FeatureToolAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet",
+      "2in1"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "FeatureToolAbility",
+        "srcEntry": "./ets/featuretoolability/FeatureToolAbility.ets",
+        "description": "$string:FeatureToolAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:FeatureToolAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "launchType": "multiton"
+      }
+    ]
+  }
+}

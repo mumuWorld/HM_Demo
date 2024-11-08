@@ -27,16 +27,24 @@ export struct SentenceCell {
                 .onClick((event) => {
                   console.log("test-> 点击:", htl.str)
                 })
+                .layoutWeight(1)
             })
           }
+          .constraintSize({
+            maxWidth: '100%'
+          })
+
           Text(this.item.sentenceTranslation)
+            .flexShrink(1)
         }
+        .width(CommonConstants.FULL_WIDTH)
         .alignItems(HorizontalAlign.Start)
       }
       .alignItems(VerticalAlign.Center)
+
       Row(){
         Text(this.item.source)
-        Row() {
+        Row({space: CommonConstants.COMMON_MIN_SPACING}) {
           Button("跟读", {type: ButtonType.Normal})
             .fontSize(14)
             .onClick(() => {

@@ -46,6 +46,11 @@
             "resource": "$profile:backup_config"
           }
         ],
+      },
+      {
+        "name": "EntryRemoteNotification",
+        "srcEntry": "./ets/entryremotenotification/EntryRemoteNotification.ets",
+        "type": "remoteNotification"
       }
     ],
     "requestPermissions": [
@@ -54,5 +59,4 @@
       }
     ]
   }
-
 }

@@ -1,13 +1,10 @@
 {
-  "name": "entry",
+  "name": "featuretool",
   "version": "1.0.0",
   "description": "Please describe the basic information.",
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {
-    "basic": "file:../common/basic",
-    "featuretool": "file:../feature/FeatureTool"
-  }
+  "dependencies": {}
 }
 

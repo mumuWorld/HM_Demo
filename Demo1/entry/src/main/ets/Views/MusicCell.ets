@@ -4,7 +4,6 @@ import { http } from "@kit.NetworkKit";
 import { image } from "@kit.ImageKit";
 import { BusinessError } from "@kit.BasicServicesKit";
 
-
 @Component
 export struct MusicCell {
 
@@ -47,7 +46,7 @@ export struct MusicCell {
   }
 
   build() {
-    Column() {
+    Column({space: CommonConstants.COMMON_MIN_SPACING}) {
       Row() {
         Image(this.pixelMapImg)
           .height(50)
@@ -69,10 +68,14 @@ export struct MusicCell {
         Button(){
           Text(this.sentence?.supportCount?.toString())
         }
+        .padding({left: 10, right: 10})
+        .height(20)
+        .backgroundColor(Color.Gray)
       }
       .width(CommonConstants.FULL_WIDTH)
       .alignItems(VerticalAlign.Center)
       .justifyContent(FlexAlign.SpaceBetween)
     }
+    .padding({left: 10, right: 10})
   }
 }
