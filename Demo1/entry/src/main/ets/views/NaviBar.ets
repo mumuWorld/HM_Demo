@@ -1,7 +1,7 @@
 import { router } from "@kit.ArkUI"
 import { PageRouterParam, PageRouterParamMdoel } from "../model/RouterModel"
 
-
+@Preview
 @Component
 export struct NaviBar {
 

@@ -10,14 +10,14 @@ import {
   SimpleWord,
   TrsClassify
 } from "./DictModel";
-import { PhoneButton } from '../Views/PhoneButton';
-import { NaviBar } from '../Views/NaviBar';
+import { PhoneButton } from '../views/PhoneButton';
+import { NaviBar } from '../views/NaviBar';
 import { PageRouterParam } from './RouterModel';
 import { CommonConstants } from '../common/constants/CommonConstants';
 import webview from '@ohos.web.webview';
 import util from '@ohos.util';
-import { SentenceCell } from '../Views/SentenceCell';
-import { MusicCell } from '../Views/MusicCell';
+import { SentenceCell } from '../views/SentenceCell';
+import { MusicCell } from '../views/MusicCell';
 
 
 @Entry
@@ -214,7 +214,7 @@ export struct ResultPage {
             }
           }
           .padding({left: 10, right: 10})
-          .backgroundColor(Color.Gray)
+          .backgroundColor(Color.Red)
         }
         .width(CommonConstants.FULL_WIDTH)
         .justifyContent(FlexAlign.Center)

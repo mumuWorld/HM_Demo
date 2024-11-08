@@ -90,6 +90,18 @@
     {
       "name": "StaticShareTool",
       "srcPath": "./feature/StaticShareTool",
+    },
+    {
+      "name": "TestShareLib",
+      "srcPath": "./feature/TestShareLib",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

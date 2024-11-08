@@ -6,7 +6,7 @@ import { PageRouterParam, PageRouterParamMdoel } from '../model/RouterModel'
 import { BusinessError } from '@kit.BasicServicesKit';
 import { common } from '@kit.AbilityKit';
 import Logger from '../common/Logger';
-import { NaviBar } from '../Views/NaviBar';
+import { NaviBar } from '../views/NaviBar';
 // import 'basic/src/main/ets/pages/Index' // 引入共享包library中的命名路由页面
 
 @Entry
@@ -51,7 +51,6 @@ struct Index {
         })
         .align(Alignment.Center)
         .backgroundColor(Color.White)
-      // Navigation(this.pageStack) {
       TextInput({ placeholder: "输入查询单词", text: this.word })
         .onSubmit((type) => {
           if (this.word.length < 1) {
@@ -62,6 +61,17 @@ struct Index {
           }
           this.pageStack.pushPath({ name: "ResultPage", param: param })
         })
+
+      Button('结果页')
+        .onClick(() => {
+          console.log('test-> router')
+          let param: PageRouterParam = {
+            source: "首页"
+          }
+          router.pushUrl({ url: "model/ResultPage", params: param })
+        })
+        .backgroundColor(Color.Black)
+
       Button('HAP跳转')
         .onClick(() => {
           let ctx = getContext(this) as common.UIAbilityContext
@@ -76,14 +86,7 @@ struct Index {
             Logger.error("index", 'test->start audio ability failed, error: ' + JSON.stringify(error))
           })
         })
-      Button('结果页')
-        .onClick(() => {
-          console.log('test-> router')
-          let param: PageRouterParam = {
-            source: "首页"
-          }
-          router.pushUrl({ url: "model/ResultPage", params: param })
-        })
+
       Button('HAR包: 绝对路径跳转')
         .onClick(() => {
           console.log('test-> router')
@@ -103,15 +106,7 @@ struct Index {
       Button('测试json')
         .onClick(() => {
           this.testJson()
-          // router.pushUrl({url: "pages/TestPage"},router.RouterMode.Standard, (error) => {
-          //   console.log('test-> error: ', error)
-          // })
         })
-      // }
-      // .mode(NavigationMode.Stack)
-      // .navDestination(this.PagesMap)
-
-
     }
     .height('100%')
     .width('100%')
